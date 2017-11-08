@@ -1,2 +1,2 @@
 # blog
-Use nodejs+express to build a
+Use nodejs+express to build a blog
