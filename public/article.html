@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>article</title>
+    <script src="/js/jquery.min.js" charset="utf-8"></script>
+    <script src="/js/bootstrap.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+    <script src="/js/ajax.js" charset="utf-8"></script>
+  </head>
+  <style media="screen">
+    .clear{
+      clear:both;
+    }
+
+  </style>
+<body>
+<div class="container">
+    <div class="header">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Dancinglove Blog</a>
+          </div>
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav" id="nav">
+              <li class="active"><a href="#">首页 <span class="sr-only">(current)</span></a></li>
+              <!--<li><a href="#">HTML5</a></li>
+              <li><a href="#">CSS</a></li>
+              <li><a href="#">Javascript</a></li>
+              <li><a href="#">Nodejs</a></li>
+              <li><a href="#">Vuejs</a></li>
+              <li><a href="#">Reactjs</a></li> -->
+            </ul>
+            <!-- <form class="navbar-form navbar-left">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search">
+              </div>
+              <button type="submit" class="btn btn-default">Submit</button>
+            </form> -->
+            <ul class="nav navbar-nav navbar-right">
+              <!-- <li><a href="#">退出登陆</a></li> -->
+
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+    </div>
+  <div class="row">
+    <div class="col-md-1">.col-md-4</div>
+    <div class="col-md-10 content">
+      <h1 class="title"></h1>
+      <div class="description text-muted">
+
+      </div>
+      <div class="articlecontent text-info">
+
+      </div>
+      <div class="footer">
+        页脚部分
+      </div>
+      <div class="comment">
+        <p>评论区域</p>
+        <textarea  class="form-control" id="customtext" placeholder="请输入你的评论吧！你的意见是我们前进的动力"></textarea>
+        <input type="button" name="name" value="提交留言" id="btnsubmit" class="btn btn-primary" style="margin-top:10px">
+        <p class="text-danger pleaselogin" style="display:none;text-align:center ">您当前还没有登陆，请先登录后进行评价</p>
+      </div>
+      <div class="commentShow">
+        <ul class="custom">
+          <!-- <li>
+            <p class="customHeader">
+              <span>用户名：mst</span>    <span>2017.69.25</span>
+            </p>
+            <p class="customContext">
+              评论内容："66666"
+            </p>
+          </li> -->
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+
+</div>
+<div class="row">
+  <div class="col-md-12"><div style="text-align:center;margin-top:30px;position:fixed;bottom:0; " class="col-md-12 copyright textCenter">Copyright © dancinglove 版权所有 | 京ICP备00000000号</div></div>
+</div>
+
+</body>
+
+<script type="text/javascript">
+console.log(document.location.search) //?articleid=1
+var url=document.location.search
+var arr1=url.split("?");    //console.log(arr1)
+var arr2=arr1[1].split("=");
+var jason={}
+jason[arr2[0]]=Number(arr2[1]);   //console.log(jason)
+
+ajax({
+  url:'/api/getArticleContent',
+  data:jason,
+  type:'post',
+  success:function(res){
+    var data=JSON.parse(res);     //console.log(data.msg)
+    if(data.ok){
+      $(".title").html(data.msg[0].title);
+      $(".description").html(data.msg[0].description)
+      $(".articlecontent").html(data.msg[0].content)
+    }
+  },
+  error:function(err){
+    alert('article获取数据失败'+err);
+  }
+})
+
+//评论部分
+ var customarr=[];
+ $("#btnsubmit").on("click",function(){
+   if(!sessionStorage.getItem("user_id")){
+      $(".pleaselogin").css("display","block");
+      $("#customtext").val("");
+      setTimeout(function(){
+        $(".pleaselogin").css("display","none");
+      },2000)
+   }else{
+      var customJson={};
+      customJson["articleid"]=arr2[1];
+      customJson['custom']= $("#customtext").val();
+      customJson['user']=sessionStorage.getItem("user_msg");
+      customJson['time']=new Date().getTime();//console.log(customJson)
+
+      ajax({
+        url:'/api/custom',
+        data:customJson,
+        type:'post',
+        success:function(res){
+          var data=JSON.parse(res);   //console.log(data.msg)
+          if(data.ok){
+            customarr.push(customJson);console.log(customarr);
+            for(var i=0;i<customarr.length;i++){
+              var oli=document.createElement("li");
+            }
+          }
+        },
+        error:function(err){
+          alert('custom获取数据失败'+err);
+        }
+      })
+  }
+
+})
+
+// 获取评论列表
+ ajax({
+    url:'/api/getcustom',
+    data:{'articleid':arr2[1]},
+    type:'post',
+    success:function(res){
+      var data=JSON.parse(res);   console.log(data)
+      if(data.ok){
+        customarr=data.msg;
+        for(var i=0;i<customarr.length;i++){
+          var oli=document.createElement("li");
+          oli.setAttribute("class",i);
+          $(".custom").append(oli);
+          $(".i").html("'<p class='customHeader'>用户名：<span>"+customarr[i].user+"</span><span>"+customarr[i].time+"</span></p><p class='customContext'>评论内容："+customarr[i].custom+"+</p>")
+        }
+      }
+    },
+    error:function(err){
+      alert('custom获取数据失败'+err);
+    }
+  })
+</script>
+</html>

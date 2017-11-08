@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/jquery.min.js" charset="utf-8"></script>
+    <script src="/js/bootstrap.min.js" charset="utf-8"></script>
+    <script src="/js/ajax.js" charset="utf-8"></script>
+    <style media="screen">
+    body{
+      background: #EBEBEB;
+    }
+      .headerbg{
+        background-image: url('/image/bg3.jpg');
+        background-repeat: no-repeat;
+        background-size:100% , 200px;
+        height: 200px;
+      }
+       .mainRight {
+        width: 100%;
+        float: right;
+      }
+       .mainRight .rightBox {
+        background: #fff;
+        padding: 16px 30px;
+        margin-bottom: 30px;
+      }
+       .mainRight .rightBox .title {
+        border-bottom: 1px solid #ebebeb;
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+       .mainRight .rightBox .title span {
+        display: inline-block;
+        margin-bottom: -1px;
+        height: 36px;
+        line-height: 36px;
+        border-bottom: 1px solid #e67e22;
+        padding: 0px 20px 0px 0px;
+      }
+       .mainRight .rightBox button {
+        background: #e67e22;
+        width: 100%;
+        height: 34px;
+        cursor: pointer;
+        border-radius: 3px;
+        color: #fff;
+        font-size: 12px;
+        font-family: '微软雅黑';
+      }
+       .mainRight .rightBox .line {
+        margin-bottom: 10px;
+        position: relative;
+      }
+       .mainRight .rightBox .line.error em {
+        width: 20px;
+        height: 20px;
+        display: block;
+        position: absolute;
+        top: 8px;
+        right: 25px;
+        cursor: pointer;
+        background: url(../images/close.png) no-repeat center center;
+        background-size: 80% 80%;
+      }
+       .mainRight .rightBox .line span {
+        width: 60px;
+        display: inline-block;
+        text-align: right;
+      }
+       .mainRight .rightBox .line input {
+        width: 210px;
+        height: 34px;
+        line-height: 34px;
+        border: 1px solid #ddd;
+        background: none;
+        padding: 0px 5px;
+      }
+       .mainRight .rightBox .line button {
+        background: #e67e22;
+        width: 210px;
+        height: 34px;
+        cursor: pointer;
+        border-radius: 3px;
+        color: #fff;
+        font-size: 12px;
+        font-family: '微软雅黑';
+      }
+      .mainRight .rightBox .line em {
+        display: none;
+      }
+      dfn {
+        text-align: left;
+        font-style: normal;
+        display: block;
+        font-size: 16px;
+        line-height: 26px;
+      }
+      .left-warp ul li{
+        background: white;
+        padding:10px;
+        list-style: none;
+        margin-left: -40px;
+        border-bottom:1px solid #EBEBEB;
+      }
+      #msgreg,#msglogin{
+        color: red;
+        font-size: 0.4em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="headerbg"></div>
+    <div class="container">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Dancinglove Blog</a>
+          </div>
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav" id="nav">
+              <li class="active"><a href="#">首页 <span class="sr-only">(current)</span></a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <!-- <li><a href="#">退出登陆</a></li> -->
+
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+
+      <div class="content">
+        <div class="col-md-8">
+          <div class="left-warp">
+            <ul class="article">
+              <li>
+                <h3>自定义文章摘要</h3>
+                <p>随着 Ghost 1.0 和 Hemingway Mode 的发布，今天我们又发布了“自定义文章摘要”功能。 默认情况下，Ghost 会截取文章正文开头部分的文字（一般是55个字）作为文章摘要并显示在文章归档列表中。摘要有助于读者快速了解文章所要表达的内容。但是，如果你希望自己定</p>
+                <a href="article.html?articleid=1">阅读全文</a>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="mainRight">
+              <div class="rightBox" id="userInfo"  style="display: none;">
+                  <div class="title"><span>用户信息</span></div>
+                  <p><span class="colDark" id="loginedusername"></span></p>
+                  <p><span class="colDanger">你好,欢迎光临我的博客！</span></p>
+                  <p><span class="colDark"><a href="#" id="logout">退出登陆</a></span></p>
+              </div>
+
+              <div class="rightBox" id="loginBox">
+                  <div class="title"><span>登录</span></div>
+                  <div class="line"><span class="colDark">用户名：</span><input name="username" id='loginuser' type="text" /><em></em></div>
+                  <div class="line"><span class="colDark">密码：</span><input name="password" id="loginpass" type="password" /><em></em></div>
+                  <div class="line"><span class="colDark"></span><button id="loginbtn">登 录</button></div>
+                  <p class="textRight">还没注册？<a href="javascript:;" class="colMint" id="goreg">马上注册</a>　</p>
+                  <p class="colWarning textCenter"  id="msglogin"></p>
+              </div>
+
+              <div class="rightBox" id="registerBox" style="display: none;">
+                  <div class="title"><span>注册</span></div>
+                  <div class="line"><span class="colDark">用户名：</span><input name="username" id="reguser" type="text" /></div>
+                  <div class="line"><span class="colDark">密码：</span><input name="password" id="regpass" type="password" /></div>
+                  <div class="line"><span class="colDark">确认：</span><input name="repassword" id="regrepass" type="password" /></div>
+
+                  <div class="line"><span class="colDark"></span><button id="regbtn">注 册</button></div>
+                  <p class="textRight">已有账号？<a href="javascript:;" class="colMint" id='gologin'>马上登录</a>　</p>
+                  <p class="colWarning textCenter"  id="msgreg"></p>
+              </div>
+
+
+              <div class="rightBox">
+                  <div class="title"><span>社区</span></div>
+                  <p><a href="http://www.baidu.com" target="_blank" class="colDanger">前端社区</a></p>
+                  <p><a href="http://www.baidu.com" target="_blank" class="colDanger">node社区</a></p>
+                  <p><a href="http://www.baidu.com" target="_blank" class="colDanger">Vue社区</a></p>
+                  <p><a href="http://www.baidu.com" target="_blank" class="colDanger">React社区</a></p>
+                  <p><a href="http://www.baidu.com" target="_blank" class="colDanger">React Native社区</a></p>
+              </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div style="text-align:center" class="col-md-12 copyright textCenter">Copyright © dancinglove 版权所有 | 京ICP备00000000号</div>
+    </div>
+  </body>
+  <script type="text/javascript">
+  var gologin=$('#gologin');
+  var goreg=$('#goreg');
+  var registerBox=$('#registerBox');
+  var loginBox=$('#loginBox');
+  // 点击马上登陆
+  $('#gologin').on('click',function(){
+    registerBox.hide();
+    loginBox.show();
+  })
+  // 点击马上注册
+  $('#goreg').on('click',function(){
+    loginBox.hide();
+    registerBox.show();
+  })
+//登陆部分
+  var loginuser=$('#loginuser');var loginpass=$('#loginpass');
+  var loginbtn=$('#loginbtn');
+  var msglogin=$('#msglogin');
+  loginbtn.on('click',function(){
+    if(!loginuser.val()&&!loginpass.val()){
+      msg.html('用户名和密码均不能为空');
+    }else{
+      ajax({
+        url:'/api/login',
+        type:'post',
+        data:{username:loginuser.val(),password:loginpass.val()},
+        success:function(res){
+          var data=JSON.parse(res);
+
+          console.log(data.user_id+'===data.user_id')
+          //console.log(data)
+          sessionStorage.setItem("user_id", data.user_id);
+          sessionStorage.setItem("user_msg", loginuser.val());
+          // loginuser.val()='';password:loginpass.val()=''
+          if(data.ok){            //登陆成功后，
+            msglogin.html(data.msg);
+            setTimeout(function(){
+              loginBox.hide();
+              $('#userInfo').show();
+              $('#loginedusername').html(loginuser.val());
+              loginuser.val("");loginpass.val("");
+              msglogin.html("");
+            },1000)
+          }else{                  //
+            msglogin.html(data.msg);
+          }
+        },
+        error:function(){
+          alert('获取数据失败');
+        }
+      })
+    }
+  });
+
+//注册的时候
+  var reguser=$('#reguser');
+  var regpass=$('#regpass');
+  var regrepass=$('#regrepass');
+  var regbtn=$('#regbtn');
+  var msgreg=$('#msgreg');
+  regbtn.on('click',function(){
+    //1.用户名和密码不能为空，两次输入的密码必须一致
+    // if(! (reguser.val()).test(/^\w{6,16}/) ){
+    //   msg.html('用户名只能由6-16数字字符下划线组成');
+    //   return;
+    // }
+    // if(!(regpass.val()).test(/^\w{6,16}/)){
+    //   msg.html('用户密码只能由6-16数字字符下划线组成');
+    //   return;
+    // }
+    if(!reguser.val()||!regpass.val()||!regrepass.val()){
+      msgreg.html('用户名和密码均不能为空');
+    }else if(regpass.val()!=regrepass.val()){
+      msgreg.html('两次输入密码不一致,请重新输入')
+    }else{
+      ajax({
+        url:'/api/reg',
+        type:'post',
+        data:{username:reguser.val(),password:regpass.val()},
+        success:function(res){
+          var data=JSON.parse(res);
+          if(data.ok){  //ok:true
+            msgreg.html(data.msg);
+
+            setTimeout(function(){
+              msgreg.html("");
+              registerBox.hide();
+              loginBox.show();
+            },1000)
+
+          }else{        //ok:false
+            msgreg.html(data.msg);console.log(data.msg)
+            reguser.val('');
+            regpass.val('');
+            regrepass.val('');
+            setTimeout(function(){
+              msgreg.html("");
+            },2000)
+
+          }
+        },
+        error:function(){
+          alert('reg获取数据失败');
+        }
+      })
+    }
+
+  })
+
+var hadlogined=''
+function getSessionId(){
+  return  ajax({
+    url:'/api/getSessionId',
+    type:'post',
+    data:{user_id:'user_id'},
+    success:function(res){
+      var data=JSON.parse(res);
+      console.log(data);console.log(data.user_id)
+      if(data.user_id){
+        loginBox.hide();
+        $('#userInfo').show();
+        $('#loginedusername').html();
+      }// else{
+      //   loginBox.show();
+      //   $('#userInfo').hide();
+      // }
+    },
+    error:function(){
+      alert('userid获取数据失败');
+    }
+  })
+
+}
+getSessionId();
+
+$('#logout').on('click',function(){
+  ajax({
+    url:'/api/logout',
+    type:'post',
+    success:function(res){
+      var data=JSON.parse(res);
+      console.log(data);console.log(data.user_id)
+      if(data.ok){
+        loginBox.show();
+        $('#userInfo').hide();
+        sessionStorage.removeItem("user_id");
+        sessionStorage.removeItem("user_msg");
+      }// else{
+      //
+      // }
+    },
+    error:function(){
+      alert('userid获取数据失败');
+    }
+  })
+})
+
+
+//nav部分的数据
+var nav=$('#nav');//<li><a href="#">HTML5</a></li>
+ajax({
+  url:'/api/getCategoryname',
+  type:'post',
+  success:function(res){
+    var data=JSON.parse(res);
+    if(data.ok){
+      console.log(data.msg)
+      for(var i=0;i<data.msg.length;i++){
+        var oli=document.createElement('li');
+        var oa=document.createElement('a');
+        oa.setAttribute("href",data.msg[i].categoryname+"?id="+data.msg[i].id);
+        oa.innerHTML=data.msg[i].categoryname;
+        oli.append(oa);
+        nav.append(oli);
+      }
+    }
+  },
+  error:function(){
+    alert('nav获取数据失败');
+  }
+})
+
+//article
+var article=$('.article');//<li><a href="#">HTML5</a></li>
+ajax({
+  url:'/api/article',
+  type:'post',
+  success:function(res){
+    var data=JSON.parse(res);
+    //console.log(data)
+    if(data.ok){
+      console.log(data.msg)
+      for(var i=0;i<data.msg.length;i++){
+        var oli=document.createElement('li');
+
+        var h3=document.createElement('h3');
+        var p=document.createElement('p');
+        var a=document.createElement('a');
+        //oa.setAttribute("href",data.msg[i].id);
+        h3.innerHTML=data.msg[i].title;
+        p.innerHTML=data.msg[i].description;
+        a.innerHTML="阅读全文"
+        a.setAttribute("href","article.html?articleid="+data.msg[i].id)
+        oli.append(h3);  oli.append(p);  oli.append(a);
+        article.append(oli);
+      }
+    }
+  },
+  error:function(){
+    alert('article获取数据失败');
+  }
+})
+
+
+  </script>
+</html>

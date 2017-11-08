@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="/js/jquery.min.js" charset="utf-8"></script>
+    <script src="/js/bootstrap.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <style>
+
+      .container-fluid{
+        width: 100%;
+        height: 100%;
+        background-image: url('/image/bg2.jpg');
+        background-repeat: no-repeat;
+        background-size:100%,100%;
+      }
+      .left-warp{
+        border-right: 1px solid #ccc;
+      }
+      .admin{
+        height: 150px;border: 1px solid #ccc;border-radius: 4px;margin: 0px 0 10px 0;
+      }
+      .adminwelcome{
+        margin: 5px 8px;
+      }
+      .right-body{
+
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid"  id='container-fluid'>
+      <div class="row">
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">后台管理系统</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="/admin">首页</a></li>
+                <li><a href="/admin/userlist">用户列表</a></li>
+                <li><a href="/admin/category">分类管理 <span class="sr-only">(current)</span></a></li>
+                <li><a href="/admin/content">内容设置</a></li>
+                <li><a href="/admin/aboutus">用户评价</a></li>
+                <li><a href="/admin/contact">contact设置</a></li>
+                <li><a href="/admin/news">news设置</a></li>
+                <li><a href="/admin/sendmsg">sendmsg设置</a></li>
+                <li><a href="/admin/custom">用户评价</a></li>
+              </ul>
+              <li style="float:right;margin-top:8px;list-style:none;"><a href="/admin/logout" class='btn btn-default btn-sm'>退出登陆</a></li>
+            </div>
+
+          </div>
+        </nav>
+        <div class="col-md-2 left-warp">
+          <div class="admin">
+            <p class="adminwelcome">欢迎admin</p>
+            <div class="adminwelcome"><a href="">基本设置</a></div>
+            <div class="logout">
+              <a href="/admin/logout" class='btn btn-default btn-sm adminwelcome'>退出登陆</a>
+            </div>
+          </div>
+          <div class="list-group">
+            <a href="#" class="list-group-item warning">facilisis</a>
+            <a href="#" class="list-group-item">risus</a>
+            <a href="#" class="list-group-item">onsectetur ac</a>
+            <a href="#" class="list-group-item">eros</a>
+          </div>
+
+        </div>
+        <div class="col-md-10 right-warp">
+          <div class="col-md-6 right-body">
+            <div class="list-group">
+              <a href="#" class="list-group-item active">
+                最新资讯
+              </a>
+              <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+              <a href="#" class="list-group-item">Morbi leo risus</a>
+              <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+              <a href="#" class="list-group-item">Vestibulum at eros</a>
+            </div>
+          </div>
+          <div class="col-md-6 right-body">
+            <div class="list-group">
+              <a href="#" class="list-group-item active">
+                Cras justo odio
+              </a>
+              <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+              <a href="#" class="list-group-item">Morbi leo risus</a>
+              <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+              <a href="#" class="list-group-item">Vestibulum at eros</a>
+            </div>
+          </div>
+          <div class="col-md-6 right-body">
+            <div class="list-group">
+              <a href="#" class="list-group-item active">
+                Cras justo odio
+              </a>
+              <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+              <a href="#" class="list-group-item">Morbi leo risus</a>
+              <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+              <a href="#" class="list-group-item">Vestibulum at eros</a>
+            </div>
+          </div>
+          <div class="col-md-6 right-body">
+            <div class="list-group">
+              <a href="#" class="list-group-item active">
+                Cras justo odio
+              </a>
+              <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+              <a href="#" class="list-group-item">Morbi leo risus</a>
+              <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+              <a href="#" class="list-group-item">Vestibulum at eros</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </body>
+  <script type="text/javascript">
+    var containerfluid=document.getElementById('container-fluid');
+    containerfluid.style.height=document.documentElement.clientHeight+'px';
+
+  </script>
+</html>

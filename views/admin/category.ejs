@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="/js/jquery.min.js" charset="utf-8"></script>
+    <script src="/js/bootstrap.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <style media="screen">
+      .clear{
+        clear: both;
+      }
+      #addForm{
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">后台管理系统</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <li><a href="/admin">首页</a></li>
+                <li><a href="/admin/userlist">用户列表</a></li>
+                <li class="active"><a href="/admin/category">分类管理<span class="sr-only">(current)</span></a></li>
+                <li><a href="/admin/content">内容设置</a></li>
+                <li><a href="/admin/aboutus">用户评价</a></li>
+                <li><a href="/admin/contact">contact设置</a></li>
+                <li><a href="/admin/news">news设置</a></li>
+                <li><a href="/admin/sendmsg">sendmsg设置</a></li>
+                <li><a href="/admin/custom">用户评价</a></li>
+              </ul>
+              <li style="float:right;margin-top:8px;list-style:none;"><a href="/admin/logout" class='btn btn-default btn-sm'>退出登陆</a></li>
+            </div>
+
+          </div>
+        </nav>
+
+
+        <div class="col-md-12 col-xs-12">
+          <div class="btn btn-danger" id="addClasses">
+            添加分类项
+          </div>
+          <form action="?" method="post" id="addForm">
+            <div class="form-group" >
+              <label for="exampleInputPassword1">添加分类</label>
+              <input type="text" name='categoryname' class="form-control" id="exampleInputPassword1" placeholder="请输入标题">
+            </div>
+            <button type="submit" class="btn btn-default">添加</button>
+          </form>
+        </div>
+
+        <div class="col-md-12" style="margin-top:30px">
+          <table class="table table-bordered">
+            <tr>
+              <th class="active">序号</th>
+              <th class="active">分类名</th>
+              <th class="active">添加时间</th>
+              <th class="active">操作</th>
+            </tr>
+            <% for(var i=0;i<categorylist.length;i++) { %>
+            <tr>
+              <td class="active"><%= categorylist[i].id %></td>
+              <td class="success"><%= categorylist[i].categoryname %></td>
+              <td class="warning">time</td>
+              <td class="info">
+                <a href="?act=mod&id=<%=categorylist[i].id%>" class="btn btn-primary btn-sm" >修改</a>
+                <a href="?act=del&id=<%=categorylist[i].id%>" class="btn btn-warning btn-sm" onclick="return confirm('你真的要删除吗？')">删除</a>
+              </td>
+            </tr>
+            <% } %>
+
+        </table>
+
+        <%if(categorylist.length==0){%>
+          <div><p style="text-align:center">暂时没有数据...</p></div>
+        <%}%>
+
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <nav aria-label="Page navigation">
+            <ul class="pagination">
+              <li>
+                <a href="?page=<%=(page-1)%>" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;上一页</span>
+                </a>
+              </li>
+              <li>
+                <span>每一页<%= limit %>条数据&nbsp;&nbsp;&nbsp;&nbsp;当前是第<%= page %>页</span></li>
+              <li>
+                <a href="?page=<%=(page+1)%>" aria-label="Next">
+                  <span aria-hidden="true">下一页&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div class="col-md-3"></div>
+        <br>
+        <div class="clear"></div>
+        <%if (typeof moddata!='undefined') { %>
+          <div class="form"><%=moddata.id%>
+            <form action="?" method="post">
+              <div class="form-group">
+                <input type="hidden" name='mod_id' value='<%=moddata.id%>' >
+                <label for="exampleInputPassword1">标题</label>
+                <input type="text" name='categoryname' class="form-control" id="exampleInputPassword1" value="<%=moddata.categoryname%>">
+                <br>
+                <input type="submit"  class="btn btn-primary" id="" value="确认修改">
+                <a href="/admin/category" class='btn btn-danger'>取消修改</a>
+              </div>
+            </form>
+          </div>
+          <%}%>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript">
+    var addClasses=document.getElementById('addClasses');
+    var addForm=document.getElementById("addForm");
+    var formview=false;
+    addClasses.onclick=function(){
+      if(formview){
+        addForm.style.display="none";
+        formview=false;
+      }else{
+        addForm.style.display="block";
+        formview=true;
+      }
+      //console.log(new Date().getTime())
+    }
+  </script>
+
+</html>
